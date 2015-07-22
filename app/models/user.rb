@@ -9,12 +9,30 @@ class User < ActiveRecord::Base
 
     before_create :set_default_role
 
+    validates_presence_of :role
+
     def full_name
-        self.name + " " + self.surname
+        if self.name.present? && self.surname.present?
+            self.name + " " + self.surname 
+        else 
+            self.email
+        end
+    end
+
+    def name
+        if self.read_attribute(:name).nil? 
+            return ""
+        end        
+    end
+
+    def surname
+        if self.read_attribute(:surname).nil? 
+            return ""
+        end        
     end
 
     def set_role(role)
-        Role.find_by_name('admin')
+        self.role = Role.find_by_name(role)
         self.save
     end
 

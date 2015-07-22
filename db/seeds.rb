@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-User.create({
+u = User.new({
     email: 'admin@admin.com',
     password: 'password'
     })
@@ -15,3 +15,6 @@ User.create({
 ['registered', 'admin'].each do |role|
   Role.find_or_create_by({name: role})
 end
+
+u.set_role('admin')
+u.save!
